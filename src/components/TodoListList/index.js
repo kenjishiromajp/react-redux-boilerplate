@@ -1,38 +1,45 @@
-import React, { Component } from "react";
-import TodoList from "../TodoList/index";
+import React, { Component } from 'react';
+import TodoList from '../TodoList/index';
+import PropTypes from 'prop-types';
 
+class TodoListList extends Component {
+  static propTypes = {
+    listTodoList: PropTypes.func.isRequired,
+    updateTodo: PropTypes.func.isRequired,
+    todos: PropTypes.object.isRequired
+  }
+  componentDidMount() {
+    this.props.listTodoList();
+  }
+  onToggleTodo = (todoId, done) => {
+    this.props.updateTodo(todoId, { done });
+  }
+  renderTodos = () => {
+    const todolists = this.props.todolists.items;
+    const todolistsIds = Object.keys(todolists);
 
-class TodoListList extends Component{
-    componentDidMount(){
-        this.props.listTodoList();
-    }
-    onToggleTodo(todo_id, done){
-        this.props.updateTodo(todo_id,{done});
-    }
-    renderTodos(){
+    const todos = this.props.todos.items;
+    const todosIds = Object.keys(todos);
 
-        const todolists = this.props.todolists.items;
-        const todolists_ids = Object.keys(todolists);
+    if (!todolistsIds.length || !todosIds.length) { return <h1>Loading</h1>; }
 
-        const todos = this.props.todos.items;
-        const todos_ids = Object.keys(todos);
-
-        if(!todolists_ids.length || !todos_ids.length)
-            return <h1>Loading</h1>;
-
-        const todoListsComponents = todolists_ids.map(todolist_id => {
-            const todolist = {...todolists[todolist_id]};
-            todolist.todos = todolist.todos.map( todo_id => todos[todo_id]);
-            return <TodoList onToggleTodo={this.onToggleTodo.bind(this)} key={todolist_id} {...todolist} />
-        });
-        return todoListsComponents;
-    }
-    render(){
-        return(
-            <ul className="todolist-container">
-                {this.renderTodos()}
-            </ul>
-        );
-    }
+    const todoListsComponents = todolistsIds.map((todolistId) => {
+      const todolist = { ...todolists[todolistId] };
+      todolist.todos = todolist.todos.map(todoId => todos[todoId]);
+      return (<TodoList
+        onToggleTodo={this.onToggleTodo}
+        key={todolistId}
+        {...todolist}
+      />);
+    });
+    return todoListsComponents;
+  }
+  render() {
+    return (
+      <ul className="todolist-container">
+        {this.renderTodos()}
+      </ul>
+    );
+  }
 }
 export default TodoListList;
