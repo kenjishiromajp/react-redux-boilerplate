@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import TodoList from '../TodoList/index';
 import PropTypes from 'prop-types';
+import TodoListContainer from "../../containers/TodoListContainer";
 
 class TodoListList extends Component {
   static propTypes = {
@@ -10,9 +10,6 @@ class TodoListList extends Component {
   }
   componentDidMount() {
     this.props.listTodoList();
-  }
-  onToggleTodo = (todoId, done) => {
-    this.props.updateTodo(todoId, { done });
   }
   renderTodos = () => {
     const todolists = this.props.todolists.items;
@@ -26,8 +23,7 @@ class TodoListList extends Component {
     const todoListsComponents = todolistsIds.map((todolistId) => {
       const todolist = { ...todolists[todolistId] };
       todolist.todos = todolist.todos.map(todoId => todos[todoId]);
-      return (<TodoList
-        onToggleTodo={this.onToggleTodo}
+      return (<TodoListContainer
         key={todolistId}
         {...todolist}
       />);

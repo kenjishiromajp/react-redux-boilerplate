@@ -1,0 +1,24 @@
+.btn-close {
+  display: block;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  label{
+    flex: 1;
+  }
+  .btn-close {
+    opacity: 0;
+    transition: opacity .4s ease;
+  }
+  &:hover {
+    .btn-close {
+      opacity: 1;
+    }
+  }
+}

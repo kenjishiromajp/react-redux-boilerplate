@@ -23,7 +23,7 @@ export function addTodo(todolistId, todo) {
 }
 
 export const updateTodo = (todoId, todo) => (dispatch, getState) => requestPatch(`todos/${todoId}`, todo)
-  .then(_ => {
+  .then((_) => {
     dispatch({
       type: UPDATE_TODO,
       payload: {
@@ -34,7 +34,7 @@ export const updateTodo = (todoId, todo) => (dispatch, getState) => requestPatch
   });
 
 export const deleteTodo = todoId => (dispatch, getState) => requestDelete(`todos/${todoId}`)
-  .then(_ => {
+  .then((_) => {
     dispatch({
       type: DELETE_TODO,
       payload: todoId,
@@ -69,9 +69,14 @@ const ACTION_HANDLERS = {
       },
     },
   }),
-  [DELETE_TODO]: (state, { payload }) => ({
-    // TODO
-  }),
+  [DELETE_TODO]: (state, { payload }) => {
+    const items = { ...state.items };
+    delete items[payload];
+    return {
+      ...state,
+      items,
+    };
+  },
 };
 
 // ------------------------------------

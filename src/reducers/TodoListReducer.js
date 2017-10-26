@@ -1,10 +1,10 @@
 // ------------------------------------
 // Constants
 // ------------------------------------
-import { requestDelete, requestGet, requestPost, requestPatch } from '../modules/api';
 import { normalize } from 'normalizr';
+import { requestDelete, requestGet, requestPost, requestPatch } from '../modules/api';
 import { todolistEntity } from '../modules/entities';
-import { LIST_TODO } from './TodoReducer';
+import { DELETE_TODO, LIST_TODO } from './TodoReducer';
 
 export const LIST_TODOLIST = 'LIST_TODOLIST';
 export const ADD_TODOLIST = 'ADD_TODOLIST';
@@ -86,6 +86,13 @@ const ACTION_HANDLERS = {
   [DELETE_TODOLIST]: (state, { payload }) => {
     const newState = Object.assign(state, {});
     delete newState[payload.id];
+    return newState;
+  },
+  [DELETE_TODO]: (state, { payload }) => {
+    const newState = { ...state };
+    for (const key in newState.items) {
+      newState.items[key].todos = newState.items[key].todos.filter(todoId => payload !== todoId);
+    }
     return newState;
   },
 };
