@@ -4,7 +4,7 @@
   "description": "Boilerplate using React of SENAI-SP",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.js --content-base build/ --hot --inline"
+    "start": "cross-env NODE_ENV=development webpack-dashboard -- webpack-dev-server -d --config configs/webpack.config.js --content-base build/ --hot --inline"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.0",
     "html-webpack-plugin": "^2.30.1",
+    "jscs": "^3.0.7",
     "node-sass": "^4.5.3",
     "normalizr": "^3.2.3",
     "object-assign": "^4.1.1",
@@ -53,6 +54,7 @@
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
     "webpack": "^3.6.0",
+    "webpack-dashboard": "^1.0.2",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-dev-server": "^2.8.2",
     "webpack-hot-middleware": "^2.19.1",

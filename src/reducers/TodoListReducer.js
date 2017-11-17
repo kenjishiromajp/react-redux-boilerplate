@@ -1,10 +1,10 @@
 // ------------------------------------
 // Constants
 // ------------------------------------
-import { normalize } from 'normalizr';
-import { requestDelete, requestGet, requestPost, requestPatch } from '../modules/api';
-import { todolistEntity } from '../modules/entities';
-import { DELETE_TODO, LIST_TODO } from './TodoReducer';
+import {normalize} from 'normalizr';
+import {requestDelete, requestGet, requestPost, requestPatch} from '../modules/api';
+import {todolistEntity} from '../modules/entities';
+import {DELETE_TODO, LIST_TODO} from './TodoReducer';
 
 export const LIST_TODOLIST = 'LIST_TODOLIST';
 export const ADD_TODOLIST = 'ADD_TODOLIST';
@@ -33,7 +33,7 @@ export function listTodoList() {
 
 export function addTodoList(todolist) {
   return (dispatch, getState) => requestPost('todolists', todolist)
-    .then((todolist) => {
+    .then(todolist => {
       dispatch({
         type: ADD_TODOLIST,
         payload: todolist,
@@ -42,7 +42,7 @@ export function addTodoList(todolist) {
 }
 
 export const updateTodoList = (todolistId, todolist) => (dispatch, getState) => requestPatch(`todolists/${todolistId}`, todolist)
-  .then((todolist) => {
+  .then(todolist => {
     dispatch({
       type: UPDATE_TODOLIST,
       payload: todolist,
@@ -50,7 +50,7 @@ export const updateTodoList = (todolistId, todolist) => (dispatch, getState) => 
   });
 
 export const deleteTodoList = todolistId => (dispatch, getState) => requestDelete(`todolists/${todolistId}`)
-  .then((todolist) => {
+  .then(todolist => {
     dispatch({
       type: DELETE_TODOLIST,
       payload: todolistId,
@@ -69,27 +69,27 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [LIST_TODOLIST]: (state, { payload }) => ({
+  [LIST_TODOLIST]: (state, {payload}) => ({
     ...state,
     items: payload,
   }),
-  [ADD_TODOLIST]: (state, { payload }) => {
+  [ADD_TODOLIST]: (state, {payload}) => {
     const newState = Object.assign(state, {});
     newState[payload.id] = payload;
     return newState;
   },
-  [UPDATE_TODOLIST]: (state, { payload }) => {
+  [UPDATE_TODOLIST]: (state, {payload}) => {
     const newState = Object.assign(state, {});
     newState[payload.id] = payload;
     return newState;
   },
-  [DELETE_TODOLIST]: (state, { payload }) => {
+  [DELETE_TODOLIST]: (state, {payload}) => {
     const newState = Object.assign(state, {});
     delete newState[payload.id];
     return newState;
   },
-  [DELETE_TODO]: (state, { payload }) => {
-    const newState = { ...state };
+  [DELETE_TODO]: (state, {payload}) => {
+    const newState = {...state};
     for (const key in newState.items) {
       newState.items[key].todos = newState.items[key].todos.filter(todoId => payload !== todoId);
     }

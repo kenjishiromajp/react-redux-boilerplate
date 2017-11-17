@@ -5,6 +5,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // Separate the CSS loader in files
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//webpack better view
+const DashboardPlugin = require('webpack-dashboard/plugin');
 
 // Methods to get the path through the 'root' or 'src'
 const inProject = path.resolve.bind(path, __dirname, '../');
@@ -17,7 +19,6 @@ const __TEST__ = NODE_ENV === 'test';
 const __PROD__ = NODE_ENV === 'production';
 
 console.log(inProjectSrc('index'));
-
 
 const config = {
   entry: {
@@ -92,10 +93,10 @@ config.module.rules.push({
             ie9: true,
           },
           uglify: true,
-        }],
+        },],
       ],
     },
-  }],
+  },],
 });
 
 // Styles
@@ -145,6 +146,7 @@ config.module.rules.push({
   }),
 });
 config.plugins.push(extractStyles);
+config.plugins.push(new DashboardPlugin());
 
 // Images
 // ------------------------------------
@@ -170,7 +172,7 @@ config.module.rules.push({
   const mimetype = font[1];
 
   config.module.rules.push({
-    test: new RegExp(`\\.${extension}$`),
+    test: new RegExp(`.${extension}$`),
     loader: 'url-loader',
     options: {
       name: 'fonts/[name].[ext]',

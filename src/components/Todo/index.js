@@ -1,6 +1,6 @@
-import React, {Component} from "react";
-import PropTypes from "prop-types";
-import "./style.scss";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import './style.scss';
 
 class Todo extends Component {
   static propTypes = {
@@ -17,20 +17,20 @@ class Todo extends Component {
 
   componentWillMount() {
     this.setState({
-      checked: this.props.done
+      checked: this.props.done,
     });
   }
 
   onToggleTodo = () => {
-    this.props.updateTodo(this.props.id, {done: !this.props.done});
+    this.props.updateTodo(this.props.id, { done: !this.props.done });
     this.setState({
-      checked: !this.state.checked
+      checked: !this.state.checked,
     });
-  }
+  };
 
   deleteTodo = () => {
     this.props.deleteTodo(this.props.id);
-  }
+  };
 
   render() {
     return (
